@@ -1,0 +1,86 @@
+<html>
+<head>
+	<title>T&iacute;tulo del trabajo</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+<div style='display:table-row; padding: 10px;'>
+  <div style='float: left; width=20%; padding:10px;'>
+  <img src='./files/logo.png'/>
+  </div>
+  <div style='float: left;padding:10px'>
+  <ul>
+    <li><b>M&oacute;dulo:</b> <i>Fundamentos de Hardware</i></li>
+    <li><b>T&iacute;tulo del trabajo</b> <i>Almacenamiento NAS</i></li>
+    <li><b>Componentes del grupo:</b> <i>Abel Garcia</i></li>
+    <li><b>Curso Acad&eacute;mico:</b> <i>2013/2014</i></li>
+    <li><b>Fecha de entrega:</b> <i>30 de Abril de 2014</i></li>
+  </ul>
+  </div>
+</div>
+<div style='float: clear;background-color: #eeeeee; border:2px solid; border-radius:10px; padding: 10px;'>
+<a href='#bloque1'>Preparar la MV</a> | <a href='#bloque2'>Instalar FreeNAS</a> | <a href='#bloque3'>Primera configuración de FreeNAS</a> | <a href='#bloque4'>Crear un volumen</a> | <a href='#final'>Comprobar desde cliente</a>
+</div>
+<h1><a id='bloque1'>Preparar la MV</a></h1>
+<p><UL><LI>Crear la MV en VBox.Elegir MV del tipo FreeBSD</LI>
+<LI>Además del disco duro virtual donde instalar FreeNAS, vamos a añadir a la máquina virtual 2 discos más de 2GB</LI>
+<LI>Configurar MV con la red en modo puente. Para que al terminar podamos acceder al NAS desde cualquier equipo de nuestra red</LI></UL></p>
+<h1><a id='bloque2'>Instalar FreeNAS</a></h1>
+<p><ul><li>Comenzamos la instalación</li>
+<img src='./files/nas/1.png'/>
+<li>Fijarse que los discos y elegir el ada0</li>
+<img src='./files/nas/2.png'/>
+<img src='./files/nas/3.png'/>
+<li>Apagar el sistema. Quitar el disco de instalación</li>
+<img src='./files/nas/4.png'/></ul></p>
+<h1><a id='bloque3'>Primera configuración de FreeNAS</a></h1>
+<p><ul><li>Vamos a realizar la configuración inicial. Éste es el aspecto del menú:</li>
+<img src='./files/nas/5.png'/>
+<li>Pulsamos 1 para configurar el interfaz de red: Configurar la IP y la máscara de red.</li>
+<img src='./files/nas/6.png'/>
+<li>Pulsamos 4 (Default static route) para configurar la puerta de enlace</li>
+<img src='./files/nas/7.png'/>
+<li>Pulsamos 6 para configurar el servidor DNS</li>
+<img src='./files/nas/8.png'/>
+<li>En la opción 9 entramos en una shell y podemos probar algunos comandos
+<ul><li type="circle">ifconfig</li>
+<img src='./files/nas/9.png'/>
+<li>df -hT</li>
+<img src='./files/nas/10.png'/>
+<li type="square">Para consultar las particiones usamos los comandos BSD siguientes:
+<ul><li type="square">fdisk /dev/ada0</li>
+<img src='./files/nas/11.png'/>
+<li type="square">fdisk /dev/adad1</li>
+<img src='./files/nas/12.png'/>
+<li type="square">fdisk /dev/ada2</li>
+<img src='./files/nas/13.png'/></ul></li></ul></li>
+<li>Comprobar que esto ha funcionado
+<ul><li>Para acceder al PANEL de configuración (por entorno gráfico) de FreeNAS, iniciamos un navegador web desde otro PC de la red. Y navegamos usando la IP del servidor FreeNAS.</li>
+<img src='./files/nas/14.png'/></ul></li></ul></p>
+<h1><a id='bloque4'>Crear un volumen</a></h1>
+<p>Ahora vamos a crear un VOLUMEN a partir de los dos discos creados de 2GB.
+<ul><li>Ir a "Storage -> Volumes -> UFS Volume Manager".</li>
+<li>Elegir mirror (RAID1) con los dos discos y el montaje en /mnt/volumen1.</li>
+<li>Si lo necesitamos, crear directorio /mnt/volumen1, para montar el volumen.</li>
+<img src='./files/nas/15.png'/><br/>
+<img src='./files/nas/16.png'/>
+<li>Activar el servicio de carpetas compartidas, ir a "Servicios" -> "Control de Servicios - > CIFS -> ON"</li>
+<img src='./files/nas/17.png'/>
+<li>Ir al servidor FreeNAS. Entrar en la Shell (Opción 9). Ejecutar los comandos siguientes:
+<ul><li>df -hT (Para comprobar que está montado el volumen1)</li>
+<img src='./files/nas/18.png'/>
+<li>mkdir /mnt/volumen1/public</li>
+<img src='./files/nas/19.png'/>
+<li>chmod 777 /mnt/volumen1/public(Cambiar los permisos de lectura/escritura).</li>
+<img src='./files/nas/20.png'/>
+</ul></li>
+<li>Creamos un recurso compartida CIFS/SMB, ir a "Sharing/Compartido" -> "Añadir recurso CIFS". Path a /mnt/volumen1/public.</li>
+<img src='./files/nas/21.png'/><br/>
+<img src='./files/nas/22.png'/>
+<img src='./files/nas/23.png'/>
+</ul></p>
+<h1><a id='final'>Comprobar desde cliente</a></h1>
+<p><ul><li>Probar que podemos acceder a dicho recurso compartido SMB/CIFS, desde otro equipo de la red.Por ejemplo, usando un cliente Windows8.</li></ul>
+<img src='./files/nas/24.png'/></p>
+</body>
+</html>
