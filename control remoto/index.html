@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>Control remoto</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+<div style='display:table-row; padding: 10px;'>
+  <div style='float: left; width=20%; padding:10px;'>
+  <img src='./files/logo.png'/>
+  </div>
+  <div style='float: left;padding:10px'>
+  <ul>
+    <li><b>M&oacute;dulo:</b> <i>Fundamentos de hardware</i></li>
+    <li><b>T&iacute;tulo del trabajo</b> <i>Control remoto</i></li>
+    <li><b>Componentes del grupo:</b> <i>Abel García García</i></li>
+    <li><b>Curso Acad&eacute;mico:</b> <i>2013/2014</i></li>
+    <li><b>Fecha de entrega:</b> <i>1 de Enero de 2014</i></li>
+  </ul>
+  </div>
+</div>
+<div style='float: clear;background-color: #eeeeee; border:2px solid; border-radius:10px; padding: 10px;'>
+<a href='#bloque1'>Master</a> | <a href='#bloque2'>Cliente GNU/Linux</a> | <a href='#final'>Cliente Windows</a>
+</div>
+<h1><a id='bloque1'>Master</a></h1>
+<p>Instalar iTalc Master (Maestro) en un equipo GNU/Linux
+<img src='./files/control_remoto/1.png'/><br/>
+En GNU/Linux la instalación de italc-master crea los siguientes ficheros:
+<ul><li>/etc/italc/keys/private/teacher/key</li>
+<li>/etc/italc/keys/public/teacher/key</li></ul>
+Si las claves anteriores no existieran después de instalar el programa habrá que generarlas. Para crear las claves de iTalc ejecutamos el comando:
+<ul><li>ica -createkeypair</li></ul>
+<img src='./files/control_remoto/2.png'/><br/>
+Creamos el grupo italc, y añadimos nuestro usuario por ejemplo "maul" al grupo:
+<ul><li>addgroup italc</li>
+<img src='./files/control_remoto/3.png'/></ul>
+<ul><li>usermod maul --groups italc</li>
+<img src='./files/control_remoto/4.png'/></ul><br/>
+Damos permisos al grupo italc, para tener acceso a las claves de italc:
+<ul><li>cd /etc/italc; chgrp -R italc keys</li>
+<img src='./files/control_remoto/5.png'/></ul>Verificar que el servicio a está iniciado: ps -ef |grep ica<br/>
+<img src='./files/control_remoto/6.png'/><br/>
+Para que el servicio ica se inicie automáticamente al iniciar sesión con el usuario "nombre-usuario":
+<ul><li>Editar fichero /home/nombre-usuario/.profile</li>
+<li>Añadir "/usr/bin/ica &" al final del fichero.</li>
+<img src='./files/control_remoto/7.png'/></ul></p>
+<h1><a id='bloque2'>Cliente GNU/Linux</a></h1>
+<p><ul><li>Instalar en GNU/Linux Debian (apt-get install italc-client)</li>
+<li>Copiar el fichero key del master directamente en /etc/italc/keys/public/teacher.</li>
+<li>Creamos el grupo italc, y añadimos nuestro usuario al grupo:
+<ul><li>addgroup italc</li><img src='./files/control_remoto/9.png'/>
+<li>usermod usuario --groups italc</li><img src='./files/control_remoto/4.png'/></ul></li>
+<li>Damos permisos al grupo italc, para tener acceso a las claves de italc:
+<ul><li>cd /etc/italc; chgrp -R italc keys</li>
+<img src='./files/control_remoto/10.png'/></ul></li>
+<li>Verificar que el servicio está iniciado (ps -ef |grep ica)</li>
+<img src='./files/control_remoto/11.png'/>
+<li>Para que el servicio ica se inicie automáticamente al iniciar sesión con el usuario "alumno"
+<ul><li>Editar fichero /home/alumno/.profile</li>
+<li>Añadir "/usr/bin/ica &" al final del fichero.</li>
+<img src='./files/control_remoto/12.png'/></ul></li></ul></p>
+<h1><a id='final'>Cliente Windows</a></h1>
+<p>Instalar italc en Windows<ul><li>Tratar de instalar una versión de Italc cliente "similar" a la del master.</li></ul><br/><img src='./files/control_remoto/13.png'/><br/> pero solo el cliente
+<br><img src='./files/control_remoto/14.png'/> 
+<ul><li>Asegurarse de que nuestro usuario de Windows tiene una clave NO vacía</li><img src='./files/control_remoto/15.png'/>
+<img src='./files/control_remoto/16.png'/><img src='./files/control_remoto/17.png'/>
+<li>Copiar el fichero de clave pública del maestro para poder importarlo en los clientes.
+<ul><li>Cambiar el nombre del fichero de clave pública del master, por el de "italc_dsa_key.pub". Este cambio es para facilitar la localización del fichero ya que la herramienta en windows busca un fichero con extensión ".pub".</li><img src='./files/control_remoto/18.png'/></ul></li>
+<li>Reiniciar el programa</li></ul>
+<ul><li>Cuando voy a conectar el master con el cliente windows me da un error de autentificación</li><img src='./files/control_remoto/19.png'/></ul></p>
+</body>
+</html>
